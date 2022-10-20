@@ -1,12 +1,14 @@
 import requests
 from bs4 import BeautifulSoup
 
+
 class Scrap:
     """return request et parsing of requests"""
     
     def __init__(self, url_page):
         self.url_page = url_page
-    
+        self.reponse = self.request()
+        self.soup = self.soup()
     
     def request(self):
         """get request of url"""
@@ -15,12 +17,11 @@ class Scrap:
     
     def soup(self):
         """get parsing of request of url"""
-        soup = BeautifulSoup(self.request().content, "html.parser")
+        reponse = self.request()
+        soup = BeautifulSoup(reponse.content, "html.parser")
         return soup
     
     
-    
-
 
 
 
