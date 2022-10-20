@@ -1,4 +1,9 @@
 class Book(dict):
+    """return dictionnary of data of book
+
+    Args:
+        dict (_type_): _description_
+    """
     def __init__(self, soup, url):
         self.soup = soup
         self["product_page_url"] = url

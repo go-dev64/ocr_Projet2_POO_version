@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 
 
 class Scrap:
-    """return request et parsing of requests"""
+    """return request et parsing of requests of html page"""
     
     def __init__(self, url_page):
         self.url_page = url_page
