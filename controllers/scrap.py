@@ -15,5 +15,12 @@ class Scrap:
     
     def soup(self):
         """get parsing of request of url"""
-        soup = BeautifulSoup(self.request.content, "html.parser")
+        soup = BeautifulSoup(self.request().content, "html.parser")
         return soup
+    
+    
+    
+
+
+
+
