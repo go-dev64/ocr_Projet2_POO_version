@@ -3,21 +3,19 @@ import os
 list1 = [1,2,3,4,5,6,9,8,7,8,5,6,49,55,9,5,9]
 
 class Category:
-
-    list_of_links_of_book = []
+    """return list of books of category
+    """
 
     def __init__(self,
                  url_category,
-                 name_of_category,
-                 list):
+                 name_of_category
+                 ):
         self.url_category = url_category
         self.name_of_category = name_of_category
         self.list = list
         
 
-    def create_folders_of_category(self):
-        if not os.path.exists("Data/" + self.name_of_category):
-            os.makedirs("Data/" + self.name_of_category )
+    
             
 
     def append_element_to_list_of_links_of_book(self):

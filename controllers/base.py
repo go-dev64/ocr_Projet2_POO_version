@@ -1,7 +1,11 @@
 from scrap import Scrap
+import os
+from views.interface import Interface
 
 URL_WEBSITE= str("http://books.toscrape.com/catalogue/category/books_1/index.html")
 
+
+Interface().user_choice_of_data
 
 class List_Of_Categories(list):
     """return list of categories
@@ -17,6 +21,37 @@ class List_Of_Categories(list):
         
 
 
+class Data_Type_Chosen_By_User:
+    
+    def __init__(self, user_input):
+        
+        self.user_input = user_input
+        
+    def data_type(self):
+    
+        if self.user_input == 1:
+            
+            
+            
+        
+        elif self.user_input == 2:
+            Interface().
+            
+            pass
+        
+        else:
+            self.user_input == 1:
+            pass
+        
+        
+        
+    
+
+
+
+def create_folders_of_category(self):
+        if not os.path.exists("Data/" + self.name_of_category):
+            os.makedirs("Data/" + self.name_of_category )
 
 
 
