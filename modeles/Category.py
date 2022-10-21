@@ -1,33 +1,55 @@
-import os
+from ..controllers.scrap import Scrap
+from ..controllers.base import URL_DOMAIN
+from Book import Book
 
-list1 = [1,2,3,4,5,6,9,8,7,8,5,6,49,55,9,5,9]
 
-class Category:
-    """return list of books of category
-    """
+class Category(list):
+    """return list of books of category"""
 
-    def __init__(self,
-                 url_category,
-                 name_of_category
-                 ):
+    def __init__(self, url_category, name_of_category):
         self.url_category = url_category
         self.name_of_category = name_of_category
-        self.list = list
-        
+        self.list_url_book = []
+        self.list_instance_of_book = []
 
-    
+    """def append_book(self):
+        url = self.url_category
+        url_modifie = url[:-10]
+        reponse = Scrap(url_modifie + "page-1.html").reponse
+
+        if reponse.ok:
+            """case of application for a request for:
+            a category of several pages or the site."""
+            self.list_url_book.extend(
+                self.get_books_links_from_all_pages(url_modifie)
+                )
+
+        elif Scrap(url).soup.find("ol", class_="row"):
+            """case of application for a request for:
+            a single page category."""
+            self.list_url_book.extend(
+                self.get_url_books_from_a_single_page(url)
+                )
             
-
-    def append_element_to_list_of_links_of_book(self):
-        
-        for link in self.list:
-            self.list_of_links_of_book.append(link)
-        
-        
-        
-        
-
-toto = Category(url_category="xxx", name_of_category="toto", list=list1)
-toto.append_element_to_list_of_links_of_book()
-print (toto.name_of_category)
-print(toto.list_of_links_of_book)
+            
+    def get_url_books_from_a_single_page(self):
+        """get all books links of page.
+        Args:
+            Parsing of html page / url page
+        Returns:
+            list of links of books from a page.
+        """
+        list_of_books_from_single_page = []
+        page = Scrap(self).soup
+        for i in page.find_all("h3"):
+            href = i.find("a")["href"]
+            book_name = href.split("/").pop(-2)
+            list_of_books_from_single_page.append(
+                URL_DOMAIN + book_name + "/index.html"
+            )
+        return list_of_books_from_single_page
+    
+    def instance_book(self):
+        for i in self.list_url_book:
+            i = Book(i)
+            self.append(i)"""
