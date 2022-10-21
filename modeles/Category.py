@@ -12,7 +12,28 @@ class Category(list):
         self.list_url_book = []
         self.list_instance_of_book = []
 
-    """def append_book(self):
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    def append_book(self):
         url = self.url_category
         url_modifie = url[:-10]
         reponse = Scrap(url_modifie + "page-1.html").reponse
@@ -52,4 +73,4 @@ class Category(list):
     def instance_book(self):
         for i in self.list_url_book:
             i = Book(i)
-            self.append(i)"""
+            self.append(i)

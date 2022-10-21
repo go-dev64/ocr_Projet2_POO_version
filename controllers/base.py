@@ -1,6 +1,6 @@
 from scrap import Scrap
 import os
-import views.interface
+from views.interface import Interface
 from modeles.Category import Category
 from modeles.Book import Book
 
@@ -57,12 +57,11 @@ class Controller:
             return URL_WEBSITE
 
         elif self.user_choice == int:
-
             self.create_folders_of_category(
                 self.list_of_category[self.user_choice]
                 )
             url_of_the_chosen_category = URL_DOMAIN
-            +self.list_url_of_category[self.user_choice]
+            + self.list_url_of_category[self.user_choice]
             
             self.list_of_category[self.user_choice] = Category(
                 url_category=url_of_the_chosen_category,
