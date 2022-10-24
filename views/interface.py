@@ -28,6 +28,7 @@ class Interface:
         match choice_of_data:
 
             case 1:
+                """return  url for 1 book"""
                 url_livre = input(
                     "Veuillez renseigner l'url du livre et"
                     "appuyer sur Entrer :"
@@ -36,6 +37,7 @@ class Interface:
                 return url_livre
 
             case 2:
+                """return url of 1 category"""
                 for i in self.list_of_name_of_categories:
                     print(i,
                           "=",
@@ -60,6 +62,7 @@ class Interface:
                 return choice_of_category
 
             case 3:
+                """return url of site"""
                 print("Export du site en cours...")
                 return URL_WEBSITE
 
@@ -67,8 +70,10 @@ class Interface:
 
         print("Export du site en cours...")
 
-    def display_download_book(self):
-        print(len(self.list_of_books), ":livres traités")
+
+
+    def display_download_book(self, books):
+        print(len(books), ":livres traités")
 
     def display_downlaod_image(self):
         print("Telechargement de l'image du livre: " + self.name)

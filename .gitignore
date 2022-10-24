@@ -1,3 +1,5 @@
 env
 Data
 controllers\__pycache__
+.vscode
+*__init__.py

@@ -1,47 +1,43 @@
-from scrap import Scrap
+from utile import Scrap
 import os
 from views.interface import Interface
-from modeles.Category import Category
-from modeles.Book import Book
+from modeles.category import Category
+from modeles.book import Book
+from modeles.website import Website
 
 URL_WEBSITE = "http://books.toscrape.com/catalogue/category/books_1/index.html"
 URL_DOMAIN = "http://books.toscrape.com/catalogue/category"
 
-
-class List_Of_Categories:
-    """return list of categories and list url of categories
-    Args:
-        list (_type_): _description_
-    """
-
+   
+class Controller:
     def __init__(self):
-        self.soup = Scrap(url_page=URL_WEBSITE).soup
-        self.list_of_category_name = self.list_of_category_name()
-        self.list_url_of_category = self.list_of_url_of_category()
-
-    def list_of_category_name(self):
+        
+        #self.list_of_category = self.list_of_category_of_name()
+        #self.list_url_of_category = self.list_of_url_of_category()
+        self.user_choice = Interface(
+            name_of_categories=self.list_of_category).user_choice_of_data
+        self.url_chosen = self.application_of_user_choice()
+        
+        
+    def list_of_category_of_name(self):
         list_of_category = []
-        for category in self.soup.find(
+        site_soup  = Scrap(url_page=URL_WEBSITE).soup
+        for category in site_soup.find(
                         "ul", class_="nav").find("ul").find_all("a"):
-            list_of_category.append(category.string.strip())
+            list_of_category.append(category.string.strip().replace(" ", "_"))
         return list_of_category
+
 
     def list_of_url_of_category(self):
         list_of_url = []
         for category in self.soup.find(
                         "ul", class_="nav").find("ul").find_all("a"):
-            list_of_url.append(category["href"][2:])
+            list_of_url.append(URL_DOMAIN + category["href"][2:])
         return list_of_url
 
 
-class Controller:
-    def __init__(self):
-        self.list_of_category = List_Of_Categories().list_of_category_name
-        self.list_url_of_category = List_Of_Categories().list_url_of_category
-        self.user_choice = Interface(
-            name_of_categories=self.list_of_category
-        ).user_choice_of_data
-        self.url_chosen = self.application_of_user_choice()
+    book_to_scrap = Website(url=URL_WEBSITE, list_url_categories=list_of_url_of_category)
+    book_to_scrap.append_category(list_of_categories=list_of_category_of_name)
 
     def application_of_user_choice(self):
         """return url chosen by user( url of book,
@@ -51,39 +47,39 @@ class Controller:
             _type_: _description_ : url
         """
         if self.user_choice == URL_WEBSITE:
+            """Create folders for each categories"""
             for category in self.list_of_category:
                 self.create_folders_of_category(category)
 
             return URL_WEBSITE
 
         elif self.user_choice == int:
+            
+            """ create a folder of category
+            return url of the chosen category
+            """
             self.create_folders_of_category(
                 self.list_of_category[self.user_choice]
                 )
             url_of_the_chosen_category = URL_DOMAIN
             + self.list_url_of_category[self.user_choice]
             
-            self.list_of_category[self.user_choice] = Category(
-                url_category=url_of_the_chosen_category,
-                name_of_category=self.list_of_category[self.user_choice],
-                list=self.select_case_of_application(
-                    url_of_the_chosen_category
-                    )
-            )
-
+            return url_of_the_chosen_category
+          
         else:
+            """for 1 book"""
             category_of_book = self.get_category_of_book(
                 self.user.choice)
             url_of_category = self.list_url_of_category[
             self.list_of_category.find(category_of_book)
             ]
     
-            self.create_folders_of_category(category_of_book)
+            self.create_folders_of_category(category_of_book.replace(" ", "_"))
             
-            
+            return url_of_category 
             
 
-    def select_case_of_application(self):
+    def select_case_of_application(self, url_chosen):
         """selects the application case according to the url entered
         by the user.
         Args:
@@ -91,7 +87,7 @@ class Controller:
         Returns:
             list of links of books (one book,category or site).
         """
-        url = self
+        url = url_chosen
         list_of_links = []
         url_modifie = url[:-10]
         reponse = Scrap(url_modifie + "page-1.html").reponse
@@ -113,7 +109,12 @@ class Controller:
         else:
             """case of application for a request for a book."""
             list_of_links.append(url)
+            
         return list_of_links
+    
+    
+    
+    
 
     def get_url_books_from_a_single_page(self):
         """get all books links of page.
@@ -164,3 +165,6 @@ class Controller:
                 "ul", class_="breadcrumb").find_all("a")[2].string
         )
         return category_of_book
+
+    def run(self):
+        

@@ -1,3 +1,7 @@
+#from utile import Scrap
+
+
+
 class Book(dict):
     """return dictionnary of data of book
 
