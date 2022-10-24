@@ -11,8 +11,8 @@ class Category(list):
         self.name_of_category = name_of_category
         self.list_url_book = list_of_url_of_books
 
-    def append_book(self):
+    def append_book(self, book):
         for book in self.list_url_book:
-            self.append(Book(soup=Scrap(book).soup, url=book))
+            self.append(book)
             #Interface(self).display_download_book(self)
 
