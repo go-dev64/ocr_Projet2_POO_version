@@ -1,9 +1,10 @@
-from views import interface
 from .utile import Scrap
 from .control_link_page import Link
+from .export import Export
 import os
 from views.interface import Interface
 from modeles.website import Website
+from 
 
 URL_WEBSITE = "http://books.toscrape.com/catalogue/category/books_1/index.html"
 URL_DOMAIN = "http://books.toscrape.com/catalogue/category"
@@ -80,45 +81,40 @@ class Controller:
             self.interface.display_download_book(category)
 
     def application_of_user_choice(self, user_choice, website):
-        """return url chosen by user( url of book,
-        url of category or url of website)
-
-        Returns:
-            _type_: _description_ :
+        """geneate instance of Book for 1 Book ,
+        all books of category or all book of site
         """
         if user_choice == "URL_WEBSITE":
             """generate all Books for all categories"""
             for category in website:
                 self.create_instance_of_book(category=category)
                 self.interface.display_download_category(category)
-
+                
         elif isinstance(user_choice, int):
             """Gerate all Books for 1 category"""
             self.create_instance_of_book(website[user_choice])
             self.interface.display_download_category(
                 website[user_choice].name_of_category
-            )
+            )            
 
         else:
             """Generate 1 Book"""
-
             category_of_book = self.get_category_of_book(
                 user_choice).replace(" ", "_")
-            """ nbr = website.index(website.name_of_category == category_of_book)"""
-            instance_of_category = ""
             for i in website:
                 if i.name_of_category == category_of_book.lower():
                     instance_of_category = i
-
-            
-            
             instance_of_category.list_url_book = user_choice
             soup = Scrap(user_choice).soup
             instance_of_category.append_book(soup, user_choice)
+            
+
+
 
     def create_folders_of_category(self, name):
         if not os.path.exists("Data/" + name):
             os.makedirs("Data/" + name)
+                
 
     def get_category_of_book(self, url):
         """return category of chosen book
@@ -135,12 +131,20 @@ class Controller:
         )
         return category_of_book
 
+
+
     def run(self):
         site = self.create_instance_webside()
+        export = Export()
         self.interface = Interface(
             name_of_categories=self.list_of_category,
             list_of_url_categories=self.list_url_of_category,
         )
         user_choice = self.user_choice()
         self.application_of_user_choice(user_choice, website=site)
+        for category in site:
+            self.create_folders_of_category(category.name_of_category)
+            export.download_files(category=category)
+            self.interface.display_end_of_process(category=category)
+                
         print(site)

@@ -22,5 +22,18 @@ class Scrap:
         soup = BeautifulSoup(reponse.content, "html.parser")
         return soup
     
+    def replace_special_caractere(self, my_str):
+        """replace special caractere
+        Args:
+            my_str (_type_): _description_
+        Returns:
+            _type_: _description_(without cspecial caractere)
+        """
+        special_caractere = "}’{!@#$%^&*'()¨^\[]};,./<>?|`~-=_+:‽"
+        for element in special_caractere:
+            my_str = my_str.replace(element, "_").replace(
+                "é", "e").replace("è", "e").replace('"', " ")
+        return my_str
+        
     
 

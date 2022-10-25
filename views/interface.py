@@ -72,13 +72,13 @@ class Interface:
     def display_download_category(self, category):
         print("Categorie: ",category,"traitée" )
 
-    def display_download_image(self):
-        print("Telechargement de l'image du livre: " + self.name)
+    def display_download_image(self, name):
+        print("Telechargement de l'image du livre: " + name)
 
-    def display_end_of_process(self):
+    def display_end_of_process(self, category):
         print(
             "Creation du fichier: "
-            + self.list_of_books[0]["category"]
-            + ".csv dans le dossier: "
-            + self.folders
+            + category
+            + ".csv dans le dossier: Data/ "
+            + category
         )
