@@ -1,4 +1,4 @@
-from controllers.base import URL_WEBSITE
+#from controllers.base import URL_WEBSITE
 
 
 class Interface:
@@ -8,14 +8,8 @@ class Interface:
 
         self.list_of_name_of_categories = name_of_categories
         self.list_of_url_categories = list_of_url_categories
-
-    def user_choice_of_data(self):
-        """return user choice of data to expotr
-
-        Returns:
-            _type_: int (1 = book, 2 = category or 3 = site)
-        """
-
+        
+    def first_choice(self):
         choice_of_data = int(
             input(
                 "    Pour exporter les données d'un livre, Taper 1\n\
@@ -24,6 +18,11 @@ class Interface:
         Indiquer votre choix et appuyer sur Entrer: "
             )
         )
+        return choice_of_data
+                
+
+    def user_choice_of_data(self):
+        choice_of_data = self.first_choice()
 
         match choice_of_data:
 
@@ -64,18 +63,16 @@ class Interface:
             case 3:
                 """return url of site"""
                 print("Export du site en cours...")
-                return URL_WEBSITE
-
-    def user_choice_is_site(self):
-
-        print("Export du site en cours...")
-
+                return "URL_WEBSITE"
 
 
     def display_download_book(self, books):
         print(len(books), ":livres traités")
+        
+    def display_download_category(self, category):
+        print("Categorie: ",category,"traitée" )
 
-    def display_downlaod_image(self):
+    def display_download_image(self):
         print("Telechargement de l'image du livre: " + self.name)
 
     def display_end_of_process(self):

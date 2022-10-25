@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 
 
+
 class Scrap:
     """return request et parsing of requests of html page"""
     
@@ -22,6 +23,4 @@ class Scrap:
         return soup
     
     
-
-
 
