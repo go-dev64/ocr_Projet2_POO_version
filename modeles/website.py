@@ -15,5 +15,3 @@ class Website(list):
             category = category.lower()
             category = Category(url_category=url, name_of_category=category)
             self.append(category)
-
-

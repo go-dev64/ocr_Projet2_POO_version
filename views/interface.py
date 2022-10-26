@@ -1,4 +1,4 @@
-#from controllers.base import URL_WEBSITE
+# from controllers.base import URL_WEBSITE
 
 
 class Interface:
@@ -8,7 +8,7 @@ class Interface:
 
         self.list_of_name_of_categories = name_of_categories
         self.list_of_url_categories = list_of_url_categories
-        
+
     def first_choice(self):
         choice_of_data = int(
             input(
@@ -19,7 +19,6 @@ class Interface:
             )
         )
         return choice_of_data
-                
 
     def user_choice_of_data(self):
         choice_of_data = self.first_choice()
@@ -29,8 +28,7 @@ class Interface:
             case 1:
                 """return  url for 1 book"""
                 url_livre = input(
-                    "Veuillez renseigner l'url du livre et"
-                    "appuyer sur Entrer :"
+                    "Veuillez renseigner l'url du livre et" "appuyer sur Entrer :"
                 )
                 print("Export du livre en cours...")
                 return url_livre
@@ -38,10 +36,7 @@ class Interface:
             case 2:
                 """return url of 1 category"""
                 for i in self.list_of_name_of_categories:
-                    print(i,
-                          "=",
-                          self.list_of_name_of_categories.index(i), end=" ; "
-                          )
+                    print(i, "=", self.list_of_name_of_categories.index(i), end=" ; ")
 
                 choice_of_category = int(
                     input(
@@ -65,20 +60,19 @@ class Interface:
                 print("Export du site en cours...")
                 return "URL_WEBSITE"
 
-
     def display_download_book(self, books):
         print(len(books), ":livres traités")
-        
+
     def display_download_category(self, category):
-        print("Categorie: ",category,"traitée" )
+        print("Catégorie: ", category, "traitée")
 
     def display_download_image(self, name):
-        print("Telechargement de l'image du livre: " + name)
+        print("Téléchargement de l'image du livre: " + name)
 
     def display_end_of_process(self, category):
         print(
             "Creation du fichier: "
-            + category
-            + ".csv dans le dossier: Data/ "
-            + category
+            + category.name_of_category
+            + ".csv dans le dossier: Data/"
+            + category.name_of_category
         )

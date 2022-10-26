@@ -4,7 +4,6 @@ from .export import Export
 import os
 from views.interface import Interface
 from modeles.website import Website
-from 
 
 URL_WEBSITE = "http://books.toscrape.com/catalogue/category/books_1/index.html"
 URL_DOMAIN = "http://books.toscrape.com/catalogue/category"
@@ -14,7 +13,7 @@ class Controller:
     def __init__(self):
         self.list_of_category = self.list_of_category_of_name()
         self.list_url_of_category = self.list_of_url_of_category()
-        self.interface = interface
+        self.interface = Interface
 
     def list_of_category_of_name(self):
         """return list of name of category
@@ -24,8 +23,7 @@ class Controller:
         """
         list_of_category = []
         site_soup = Scrap(url_page=URL_WEBSITE).soup
-        for category in site_soup.find("ul",
-                                       class_="nav").find("ul").find_all("a"):
+        for category in site_soup.find("ul", class_="nav").find("ul").find_all("a"):
             list_of_category.append(category.string.strip().replace(" ", "_"))
         return list_of_category
 
@@ -89,32 +87,27 @@ class Controller:
             for category in website:
                 self.create_instance_of_book(category=category)
                 self.interface.display_download_category(category)
-                
+
         elif isinstance(user_choice, int):
             """Gerate all Books for 1 category"""
             self.create_instance_of_book(website[user_choice])
             self.interface.display_download_category(
                 website[user_choice].name_of_category
-            )            
+            )
 
         else:
             """Generate 1 Book"""
-            category_of_book = self.get_category_of_book(
-                user_choice).replace(" ", "_")
+            category_of_book = self.get_category_of_book(user_choice).replace(" ", "_")
             for i in website:
                 if i.name_of_category == category_of_book.lower():
                     instance_of_category = i
             instance_of_category.list_url_book = user_choice
             soup = Scrap(user_choice).soup
             instance_of_category.append_book(soup, user_choice)
-            
-
-
 
     def create_folders_of_category(self, name):
         if not os.path.exists("Data/" + name):
             os.makedirs("Data/" + name)
-                
 
     def get_category_of_book(self, url):
         """return category of chosen book
@@ -126,12 +119,9 @@ class Controller:
             _type_: name of category of book
         """
         category_of_book = (
-            Scrap(url).soup.find("ul",
-                                 class_="breadcrumb").find_all("a")[2].string
+            Scrap(url).soup.find("ul", class_="breadcrumb").find_all("a")[2].string
         )
         return category_of_book
-
-
 
     def run(self):
         site = self.create_instance_webside()
@@ -143,8 +133,7 @@ class Controller:
         user_choice = self.user_choice()
         self.application_of_user_choice(user_choice, website=site)
         for category in site:
-            self.create_folders_of_category(category.name_of_category)
-            export.download_files(category=category)
-            self.interface.display_end_of_process(category=category)
-                
-        print(site)
+            if len(category) > 0:
+                self.create_folders_of_category(category.name_of_category)
+                export.download_files(category=category)
+                self.interface.display_end_of_process(category=category)

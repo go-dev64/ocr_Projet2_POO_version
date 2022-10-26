@@ -2,13 +2,11 @@ from .utile import Scrap
 
 
 class Link:
-    
     def __init__(self, url_chosen, url_domain):
-        
+
         self.url_chosen = url_chosen
         self.url_domain = url_domain
 
-    
     def get_links_books(self):
         """selects the application case according to the url entered
         by the user.
@@ -25,21 +23,17 @@ class Link:
         if reponse.ok:
             """case of application for a request for:
             a category of several pages or the site."""
-            list_of_links.extend(
-                self.get_books_links_from_all_pages(url_modifie)
-                )
+            list_of_links.extend(self.get_books_links_from_all_pages(url_modifie))
 
         elif Scrap(url).soup.find("ol", class_="row"):
             """case of application for a request for:
             a single page category."""
-            list_of_links.extend(
-                self.get_url_books_from_a_single_page(url)
-                )
+            list_of_links.extend(self.get_url_books_from_a_single_page(url))
 
         else:
             """case of application for a request for a book."""
             list_of_links.append(url)
-            
+
         return list_of_links
 
     def get_url_books_from_a_single_page(self, url_page):

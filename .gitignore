@@ -1,5 +1,8 @@
 env
 Data
 controllers\__pycache__
+controllers\__init__.py
+modeles\__init__.py
+views__init__.py
 .vscode
-*__init__.py
+__init__.py
